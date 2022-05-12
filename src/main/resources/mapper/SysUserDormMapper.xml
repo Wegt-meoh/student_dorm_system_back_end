@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lasting.mapper.SysUserDormMapper">
+
+    <insert id="insertUserDorm">
+        insert into sys_user_dorm(
+            user_id,dorm_id
+        )
+        values(
+            #{userId},#{dormId}
+        )
+    </insert>
+    <delete id="deleteUserDormByUserId">
+        delete from sys_user_dorm
+        where user_id=#{userId}
+    </delete>
+</mapper>

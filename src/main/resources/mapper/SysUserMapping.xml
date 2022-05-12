@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lasting.mapper.SysUserMapper">
+    <resultMap id="SysUserResult" type="com.lasting.entity.SysUser">
+        <id property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="studentNumber" column="student_number" jdbcType="VARCHAR"/>
+        <result property="phoneNumber" column="phoneNumber" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="DATE"/>
+        <result property="updateTime" column="update_time" jdbcType="DATE"/>
+        <association property="role" javaType="com.lasting.entity.SysRole" column="role_id">
+            <id column="role_id" property="roleId" jdbcType="INTEGER"/>
+            <result column="role_name" property="roleName" jdbcType="VARCHAR"/>
+            <result column="role_key" property="roleKey" jdbcType="VARCHAR"/>
+        </association>
+        <association property="dorm" javaType="com.lasting.entity.SysDorm" column="dorm_id">
+            <id column="dorm_id" property="dormId" jdbcType="INTEGER"/>
+            <result column="dorm_num" property="dormNumber" jdbcType="VARCHAR"/>
+            <result column="building_num" property="buildingNumber" jdbcType="VARCHAR"/>
+        </association>
+    </resultMap>
+
+    <sql id="SysUserVo">
+        select u.user_id,
+               u.username,
+               u.password,
+               u.sex,
+               u.student_number,
+               u.phonenumber,
+               u.create_time,
+               u.update_time,
+               r.role_name,
+               r.role_key,
+               d.dorm_num,
+               d.building_num
+        from sys_user u
+                 left join sys_user_role u_r on u_r.user_id = u.user_id
+                 left join sys_role r on u_r.role_id = r.role_id
+                 left join sys_user_dorm u_d on u_d.user_id = u.user_id
+                 left join sys_dorm d on d.dorm_id = u_d.dorm_id
+    </sql>
+    <insert id="insertUser" parameterType="com.lasting.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
+        insert into sys_user(
+            <if test="userId!=null and userId!=0">userId,</if>
+            <if test="username!=null and username!=''">username,</if>
+            <if test="password!=null and password!=''">password,</if>
+            <if test="sex!=null and sex!=''">sex,</if>
+            <if test="studentNumber!=null and studentNumber!=''">student_number,</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">phonenumber,</if>
+            create_time
+        )
+        values(
+            <if test="userId!=null and userId!=0">#{userId},</if>
+            <if test="username!=null and username!=''">#{username},</if>
+            <if test="password!=null and password!=''">#{password},</if>
+            <if test="sex!=null and sex!=''">#{sex},</if>
+            <if test="studentNumber!=null and studentNumber!=''">#{studentNumber},</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">#{phoneNumber},</if>
+            <if test="createTime!=null and phoneNumber!=''">#{createTime},</if>
+            sysdate()
+        )
+    </insert>
+    <update id="updateUser">
+        update sys_user
+        <set>
+            <if test="username!=null and username!=''">username=#{username},</if>
+            <if test="password!=null and password!=''">password=#{password},</if>
+            <if test="sex!=null and sex!=''">sex=#{sex},</if>
+            <if test="studentNumber!=null and studentNumber!=''">student_number=#{studentNumber},</if>
+            <if test="phoneNumber!=null and phoneNumber!=''">phonenumber=#{phoneNumber},</if>
+            update_time=sysdate()
+        </set>
+        where user_id=#{userId}
+    </update>
+    <update id="resetUserPwd">
+        update sys_user
+        set password=#{password},update_time=sysdate()
+        where user_id=#{userId}
+    </update>
+    <delete id="deleteUser" parameterType="long">
+        delete from sys_user
+        where user_id=#{userId}
+    </delete>
+    <delete id="deleteUserByIds">
+        delete from sys_user
+        where user_id in
+        <foreach collection="array" item="userId" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <select id="selectUserList" parameterType="com.lasting.entity.SysUser" resultMap="SysUserResult">
+        <include refid="SysUserVo"/>
+        where True
+        <if test="userId!=null and userId!=0">
+            AND u.user_id=#{userId}
+        </if>
+        <if test="username!=null and username!=''">
+            AND u.username like concat('%',#{username},'%')
+        </if>
+        <if test="sex!=null and sex!=''">
+            AND u.sex like concat('%',#{sex},'%')
+        </if>
+        <if test="studentNumber!=null and studentNumber!=''">
+            AND u.student_number like concat('%',#{studentNumber},'%')
+        </if>
+        <if test="phoneNumber!=null and phoneNumber!=''">
+            AND u.phonenumber like concat('%',#{phoneNumber},'%')
+        </if>
+    </select>
+    <select id="selectUserListByUsername" parameterType="string" resultType="com.lasting.entity.SysUser">
+        <include refid="SysUserVo"/>
+        where u.username like concat('%',#{username},'%')
+    </select>
+    <select id="selectUserByUserId" parameterType="long" resultType="com.lasting.entity.SysUser">
+        <include refid="SysUserVo"/>
+        where u.user_id=#{userId}
+    </select>
+    <select id="selectUserByStudentNumber" parameterType="string" resultType="com.lasting.entity.SysUser">
+        <include refid="SysUserVo"/>
+        where u.student_number = #{studentNumber}
+    </select>
+    <select id="checkStudentNumberUnique" parameterType="string" resultType="java.lang.Integer">
+        select count(1)
+        from sys_user
+        where student_number = #{studentNumber} limit 1
+    </select>
+    <select id="checkPhoneNumberUnique" parameterType="string" resultType="java.lang.Integer">
+        select count(1)
+        from sys_user
+        where phonenumber = #{phoneNumber} limit 1
+    </select>
+
+
+</mapper>

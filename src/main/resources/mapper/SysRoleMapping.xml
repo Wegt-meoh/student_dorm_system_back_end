@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lasting.mapper.SysRoleMapper">
+    <resultMap id="RoleResultMap" type="com.lasting.entity.SysRole">
+        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_key" jdbcType="VARCHAR" property="roleKey"/>
+    </resultMap>
+
+    <select id="selectRoleByUserId" parameterType="long" resultType="com.lasting.entity.SysRole">
+        select r.role_id,r.role_name,r.role_key from sys_role r
+        left join sys_user_role u_r on r.role_id = u_r.role_id
+        where u_r.user_id=#{userId}
+    </select>
+    <select id="selectRoleAll" resultType="com.lasting.entity.SysRole">
+        select r.role_id,r.role_name,r.role_key from sys_role
+    </select>
+    <select id="selectRoleByRoleId" parameterType="long" resultType="com.lasting.entity.SysRole">
+        select r.role_id,r.role_name,r.role_key from sys_role r
+        where r.role_id=#{roleId}
+    </select>
+</mapper>
