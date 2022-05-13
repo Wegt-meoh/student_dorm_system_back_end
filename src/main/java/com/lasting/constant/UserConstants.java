@@ -1,5 +1,7 @@
 package com.lasting.constant;
 
+import javax.ws.rs.PUT;
+
 /**
  * 用户常量信息
  * 
@@ -69,6 +71,9 @@ public class UserConstants
      */
     public static final int USERNAME_MIN_LENGTH = 2;
     public static final int USERNAME_MAX_LENGTH = 20;
+
+    public static final int STUDENT_NUMBER_MIN_LENGTH=2;
+    public static final int STUDENT_NUMBER_MAX_LENGTH=20;
 
     /**
      * 密码长度限制

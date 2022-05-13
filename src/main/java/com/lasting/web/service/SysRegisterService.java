@@ -44,8 +44,8 @@ public class SysRegisterService
         {
             msg = "用户密码不能为空";
         }
-        else if (studentNumber.length() < UserConstants.USERNAME_MIN_LENGTH
-                || studentNumber.length() > UserConstants.USERNAME_MAX_LENGTH)
+        else if (studentNumber.length() < UserConstants.STUDENT_NUMBER_MIN_LENGTH
+                || studentNumber.length() > UserConstants.STUDENT_NUMBER_MAX_LENGTH)
         {
             msg = "账户长度必须在2到20个字符之间";
         }

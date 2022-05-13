@@ -24,8 +24,6 @@ public class LoginController
     @Autowired
     private LoginService loginService;
 
-    @Autowired
-    private ISysRoleService ISysRoleService;
 
     /**
      * 登录方法
@@ -38,8 +36,7 @@ public class LoginController
     {
         AjaxResult ajax = AjaxResult.success();
         // 生成令牌
-        String token = loginService.login(loginBody.getStudentNumber(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getUuid());
+        String token = loginService.login(loginBody.getStudentNumber(), loginBody.getPassword(), loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
@@ -53,10 +50,8 @@ public class LoginController
     public AjaxResult getInfo()
     {
         SysUser user=SecurityUtils.getLoginUser().getUser();
-        String role= ISysRoleService.getRoleKeyByUserId(user.getUserId());
         AjaxResult ajax = AjaxResult.success();
         ajax.put("user", user);
-        ajax.put("role", role);
         return ajax;
     }
 }
