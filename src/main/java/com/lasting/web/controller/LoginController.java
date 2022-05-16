@@ -8,6 +8,7 @@ import com.lasting.service.ISysRoleService;
 import com.lasting.web.service.LoginService;
 import com.lasting.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,12 +47,13 @@ public class LoginController
      *
      * @return 用户信息
      */
+    @PreAuthorize("@ss.hasPermi('student')")
     @GetMapping("getInfo")
     public AjaxResult getInfo()
     {
         SysUser user=SecurityUtils.getLoginUser().getUser();
         AjaxResult ajax = AjaxResult.success();
-        ajax.put("user", user);
+        ajax.put(AjaxResult.DATA_TAG, user);
         return ajax;
     }
 }

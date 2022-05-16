@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 public class LoginUser implements UserDetails{
+    private static final long serialVersionUID = 1L;
 
     private Long userId;
     private String token;
@@ -24,8 +25,17 @@ public class LoginUser implements UserDetails{
         this.user = user;
     }
 
+    public LoginUser(Long userId, String token, Long loginTime, Long expireTime, String ipAddress, SysUser user) {
+        this.userId = userId;
+        this.token = token;
+        this.loginTime = loginTime;
+        this.expireTime = expireTime;
+        this.ipAddress = ipAddress;
+        this.user = user;
+    }
+
     public Long getUserId() {
-        return userId;
+        return this.userId;
     }
 
     public void setUserId(Long userId) {
@@ -33,7 +43,7 @@ public class LoginUser implements UserDetails{
     }
 
     public String getToken() {
-        return token;
+        return this.token;
     }
 
     public void setToken(String token) {
@@ -41,7 +51,7 @@ public class LoginUser implements UserDetails{
     }
 
     public Long getLoginTime() {
-        return loginTime;
+        return this.loginTime;
     }
 
     public void setLoginTime(Long loginTime) {
@@ -49,7 +59,7 @@ public class LoginUser implements UserDetails{
     }
 
     public Long getExpireTime() {
-        return expireTime;
+        return this.expireTime;
     }
 
     public void setExpireTime(Long expireTime) {
@@ -57,7 +67,7 @@ public class LoginUser implements UserDetails{
     }
 
     public String getIpAddress() {
-        return ipAddress;
+        return this.ipAddress;
     }
 
     public void setIpAddress(String ipAddress) {
@@ -65,7 +75,7 @@ public class LoginUser implements UserDetails{
     }
 
     public SysUser getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(SysUser user) {
@@ -87,7 +97,7 @@ public class LoginUser implements UserDetails{
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getStudentNumber();
     }
 
     @JSONField(serialize = false)

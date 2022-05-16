@@ -28,7 +28,7 @@ public class PermissionService {
 
     private boolean hasPermissions(String userRoleKey, String roleKey)
     {
-        if(userRoleKey=="admin") return true;
+        if(userRoleKey.equals("admin")) return true;
         else return userRoleKey==roleKey;
     }
 }

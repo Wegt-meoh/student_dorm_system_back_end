@@ -17,15 +17,13 @@ public class SysUser {
     private String phoneNumber;
     private Date createTime;
     private Date updateTime;
-    private Long roleId;
     private SysRole role;
-    private Long dormId;
     private SysDorm dorm;
 
     public String getRoleKey(){return this.role.getRoleKey();}
 
     public boolean isAdmin(){
-        return isAdmin(this.roleId);
+        return isAdmin(this.role.getRoleId());
     }
 
     public static boolean isAdmin(Long roleId){
@@ -99,28 +97,12 @@ public class SysUser {
         this.updateTime = updateTime;
     }
 
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
-    }
-
     public SysRole getRole() {
         return role;
     }
 
     public void setRole(SysRole role) {
         this.role = role;
-    }
-
-    public Long getDormId() {
-        return dormId;
-    }
-
-    public void setDormId(Long dormId) {
-        this.dormId = dormId;
     }
 
     public SysDorm getDorm() {
