@@ -10,8 +10,6 @@ import java.util.Set;
 
 @Service("ss")
 public class PermissionService {
-//    private static final String ALL_PERMISSION = "*:*:*";
-
     public boolean hasPermi(String roleKey)
     {
         if (StringUtils.isEmpty(roleKey))

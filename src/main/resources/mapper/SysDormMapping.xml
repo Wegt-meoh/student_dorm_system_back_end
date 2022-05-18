@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lasting.mapper.SysDormMapper">
+    <resultMap id="DormResult" type="com.lasting.entity.SysDorm">
+        <id jdbcType="INTEGER" property="dormId" column="dorm_id"/>
+        <result jdbcType="VARCHAR" property="dormNumber" column="dorm_num"/>
+        <result jdbcType="VARCHAR" property="buildingNumber" column="building_num"/>
+    </resultMap>
+
+    <select id="selectDormAll" resultMap="DormResult">
+        select d.dorm_id,d.dorm_num,d.building_num from sys_dorm d
+    </select>
+    <select id="getDormId" resultType="java.lang.Long">
+        select d.dorm_id from sys_dorm d
+        where d.dorm_num=#{dormNumber} and d.building_num=#{buildingNumber}
+        limit 1
+    </select>
+    <select id="getDormByDormId" resultMap="DormResult">
+        select d.dorm_id,d.dorm_num,d.building_num from sys_dorm d
+        where d.dorm_id=#{dormId}
+    </select>
+</mapper>

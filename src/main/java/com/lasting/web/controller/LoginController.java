@@ -48,7 +48,7 @@ public class LoginController
      * @return 用户信息
      */
     @PreAuthorize("@ss.hasPermi('student')")
-    @GetMapping("getInfo")
+    @GetMapping("/getInfo")
     public AjaxResult getInfo()
     {
         SysUser user=SecurityUtils.getLoginUser().getUser();

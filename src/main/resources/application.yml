@@ -37,11 +37,10 @@ mybatis:
   type-aliases-package: com.lasting.mapper
   mapper-locations: classpath*:mapper/*Mapping.xml
 
-
 # 日志输出
 logging:
   level:
-    com.example.sql_demo: debug
+    com.lasting: debug
     org.springframework: warn
   file:
     name: /Users/quepengbiao/logs

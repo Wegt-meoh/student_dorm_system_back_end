@@ -9,4 +9,5 @@ public interface ISysRoleService {
     public List<SysRole> selectRoleAll();
     public SysRole selectRoleByRoleId(Long roleId);
     public String getRoleKeyByUserId(Long userId);
+    public Long getRoleIdByRoleKey(String roleKey);
 }

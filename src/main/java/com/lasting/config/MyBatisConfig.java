@@ -1,5 +1,6 @@
 package com.lasting.config;
 
+import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 
 /**
@@ -21,6 +23,30 @@ public class MyBatisConfig {
 
     @Autowired
     private Environment env;
+
+    /**
+     * @Author: WanG
+     * @Date: 2019-05-13 18:42
+     * @version: v1.0
+     * @description: TODO
+     */
+    @Configuration
+    public class MybatisConfig {
+        @Bean
+        public PageHelper pageHelper() {
+            PageHelper pageHelper = new PageHelper();
+            Properties p = new Properties();
+            p.setProperty("offsetAsPageNum", "true");
+            p.setProperty("rowBoundsWithCount", "true");
+            p.setProperty("reasonable", "true");
+            p.setProperty("helperDialect","mysql");
+            p.setProperty("supportMethodsArguments","true");
+            p.setProperty("params","count=countSql");
+            pageHelper.setProperties(p);
+            return pageHelper;
+        }
+    }
+
 
     @Bean
     public SqlSessionFactory sqlSessionFactory(DataSource myDataSource) throws Exception {

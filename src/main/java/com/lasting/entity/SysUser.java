@@ -20,9 +20,13 @@ public class SysUser {
     private SysRole role;
     private SysDorm dorm;
 
-    public String getRoleKey(){return this.role.getRoleKey();}
+    public String getRoleKey(){
+        if(this.getRole()==null) return "";
+        return this.role.getRoleKey();
+    }
 
     public boolean isAdmin(){
+        if(this.getRole()==null) return false;
         return isAdmin(this.role.getRoleId());
     }
 

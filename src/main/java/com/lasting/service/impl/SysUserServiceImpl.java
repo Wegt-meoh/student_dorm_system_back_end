@@ -9,6 +9,7 @@ import com.lasting.mapper.SysUserRoleMapper;
 import com.lasting.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -65,8 +66,19 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    @Transactional
     public int insertUser(SysUser user) {
-        return userMapper.insertUser(user);
+        int row =userMapper.insertUser(user);
+        Long userId=user.getUserId();
+        if(user.getRole()!=null){
+            Long roleId=user.getRole().getRoleId();
+            insertUserRole(userId,roleId);
+        }
+        if(user.getDorm()!=null){
+            Long dormId=user.getDorm().getDormId();
+            insertUserDorm(userId,dormId);
+        }
+        return row;
     }
 
     @Override
@@ -82,10 +94,11 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     public void insertUserDorm(Long userId, Long dormId) {
-        userRoleMapper.insertUserRole(userId,dormId);
+        userDormMapper.insertUserDorm(userId,dormId);
     }
 
     @Override
+    @Transactional
     public int updateUser(SysUser user) {
         Long userId = user.getUserId();
         Long dormId = user.getDorm().getDormId();
@@ -108,6 +121,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    @Transactional
     public int deleteUser(Long userId) {
         userRoleMapper.deleteUserRoleByUserId(userId);
         userDormMapper.deleteUserDormByUserId(userId);
@@ -115,6 +129,7 @@ public class SysUserServiceImpl implements ISysUserService {
     }
 
     @Override
+    @Transactional
     public int deleteUserByIds(Long[] ids) {
         int count=0;
         for(Long id : ids){

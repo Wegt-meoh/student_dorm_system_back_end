@@ -7,15 +7,15 @@
         <result column="role_key" jdbcType="VARCHAR" property="roleKey"/>
     </resultMap>
 
-    <select id="selectRoleByUserId" parameterType="long" resultType="com.lasting.entity.SysRole">
+    <select id="selectRoleByUserId" parameterType="long" resultMap="RoleResultMap">
         select r.role_id,r.role_name,r.role_key from sys_role r
         left join sys_user_role u_r on r.role_id = u_r.role_id
         where u_r.user_id=#{userId}
     </select>
-    <select id="selectRoleAll" resultType="com.lasting.entity.SysRole">
-        select r.role_id,r.role_name,r.role_key from sys_role
+    <select id="selectRoleAll" resultMap="RoleResultMap">
+        select r.role_id,r.role_name,r.role_key from sys_role r
     </select>
-    <select id="selectRoleByRoleId" parameterType="long" resultType="com.lasting.entity.SysRole">
+    <select id="selectRoleByRoleId" parameterType="long" resultMap="RoleResultMap">
         select r.role_id,r.role_name,r.role_key from sys_role r
         where r.role_id=#{roleId}
     </select>
