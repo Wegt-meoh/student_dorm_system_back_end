@@ -33,6 +33,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     public String getRoleKeyByUserId(Long userId) {
         SysRole sysRole = roleMapper.selectRoleByUserId(userId);
+        if(sysRole==null) return null;
         return sysRole.getRoleKey();
     }
 

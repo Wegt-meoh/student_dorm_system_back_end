@@ -20,7 +20,10 @@ public class LoginUser implements UserDetails{
 
     public String getRoleKey(){return this.user.getRoleKey();}
 
-    public LoginUser(Long userId,SysUser user) {
+    public LoginUser() {
+    }
+
+    public LoginUser(Long userId, SysUser user) {
         this.userId=userId;
         this.user = user;
     }

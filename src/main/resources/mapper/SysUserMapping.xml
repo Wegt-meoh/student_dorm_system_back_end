@@ -45,7 +45,7 @@
     </sql>
     <insert id="insertUser" parameterType="com.lasting.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
         insert into sys_user(
-            <if test="userId!=null and userId!=0">userId,</if>
+            <if test="userId!=null and userId!=0">user_id,</if>
             <if test="username!=null and username!=''">username,</if>
             <if test="password!=null and password!=''">password,</if>
             <if test="sex!=null and sex!=''">sex,</if>
@@ -103,7 +103,7 @@
             AND u.username like concat('%',#{username},'%')
         </if>
         <if test="sex!=null and sex!=''">
-            AND u.sex like concat('%',#{sex},'%')
+            AND u.sex = #{sex}
         </if>
         <if test="studentNumber!=null and studentNumber!=''">
             AND u.student_number like concat('%',#{studentNumber},'%')
@@ -134,6 +134,4 @@
         from sys_user
         where phonenumber = #{phoneNumber} limit 1
     </select>
-
-
 </mapper>

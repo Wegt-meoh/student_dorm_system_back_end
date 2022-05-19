@@ -1,13 +1,11 @@
 package com.lasting.web.controller;
 
-
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.lasting.constant.HttpStatus;
 import com.lasting.entity.SysDorm;
 import com.lasting.entity.SysRole;
 import com.lasting.entity.SysUser;
 import com.lasting.entity.model.AjaxResult;
+import com.lasting.entity.model.LoginUser;
 import com.lasting.security.SecurityUtils;
 import com.lasting.service.ISysDormService;
 import com.lasting.service.ISysRoleService;
@@ -18,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.json.Json;
 import java.util.List;
 
 @RestController
@@ -71,5 +67,15 @@ public class SysUserController extends BaseController{
         }
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         return toAjax(userService.insertUser(user));
+    }
+    @PreAuthorize("@ss.hasPermi('admin')")
+    @DeleteMapping("/del")
+    public AjaxResult delete(@RequestBody SysUser user){
+        LoginUser loginUser = getLoginUser();
+        String roleKey = roleService.getRoleKeyByUserId(user.getUserId());
+        if(loginUser.getUserId()==user.getUserId()||(roleKey!=null&&roleKey.equals("admin"))){
+            return AjaxResult.error(HttpStatus.ERROR,"无操作权限");
+        }
+        return toAjax(userService.deleteUser(user.getUserId()));
     }
 }

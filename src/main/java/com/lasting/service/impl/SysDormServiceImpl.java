@@ -27,4 +27,11 @@ public class SysDormServiceImpl implements ISysDormService {
     public SysDorm getDormByDormId(Long dormId) {
         return dormMapper.getDormByDormId(dormId);
     }
+
+    @Override
+    public int insertDorm(String dormNumber, String buildingNumber) {
+        return dormMapper.insertDorm(dormNumber,buildingNumber);
+    }
+
+
 }

@@ -8,4 +8,5 @@ public interface ISysDormService {
     public List<SysDorm> selectDormAll();
     public Long getDormId(String dormNumber,String buildingNumber);
     public SysDorm getDormByDormId(Long dormId);
+    int insertDorm(String dormNumber,String buildingNumber);
 }

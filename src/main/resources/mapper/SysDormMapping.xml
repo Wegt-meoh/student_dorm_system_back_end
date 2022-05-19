@@ -6,6 +6,10 @@
         <result jdbcType="VARCHAR" property="dormNumber" column="dorm_num"/>
         <result jdbcType="VARCHAR" property="buildingNumber" column="building_num"/>
     </resultMap>
+    <insert id="insertDorm">
+        insert into sys_dorm(dorm_id,dorm_num,building_num)
+        values(null,#{dormNumber},#{buildingNumber})
+    </insert>
 
     <select id="selectDormAll" resultMap="DormResult">
         select d.dorm_id,d.dorm_num,d.building_num from sys_dorm d
