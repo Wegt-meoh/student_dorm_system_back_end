@@ -1,6 +1,7 @@
 package com.lasting.service.impl;
 
 import com.lasting.entity.SysDorm;
+import com.lasting.entity.SysRole;
 import com.lasting.entity.SysUser;
 import com.lasting.mapper.SysRoleMapper;
 import com.lasting.mapper.SysUserDormMapper;
@@ -136,5 +137,27 @@ public class SysUserServiceImpl implements ISysUserService {
             count+=deleteUser(id);
         }
         return count;
+    }
+
+    @Override
+    public boolean isSuperAdmin(Long userId) {
+        return userId!=null&&userId==1L;
+    }
+
+    @Override
+    public boolean isSuperAdmin(SysUser user) {
+        return user!=null&&isSuperAdmin(user.getUserId());
+    }
+
+    @Override
+    public boolean isAdmin(Long userId) {
+        if(userId==null) return false;
+        SysRole role = roleMapper.selectRoleByUserId(userId);
+        return role!=null&&role.getRoleKey().equals("admin");
+    }
+
+    @Override
+    public boolean isAdmin(SysUser user) {
+        return user!=null&&isAdmin((user.getUserId()));
     }
 }

@@ -124,4 +124,10 @@ public interface ISysUserService {
      * @return
      */
     public int deleteUserByIds(Long[] ids);
+
+    boolean isSuperAdmin(Long userId);
+    boolean isSuperAdmin(SysUser user);
+
+    boolean isAdmin(Long userId);
+    boolean isAdmin(SysUser user);
 }

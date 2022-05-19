@@ -72,10 +72,13 @@ public class SysUserController extends BaseController{
     @DeleteMapping("/del")
     public AjaxResult delete(@RequestBody SysUser user){
         LoginUser loginUser = getLoginUser();
-        String roleKey = roleService.getRoleKeyByUserId(user.getUserId());
-        if(loginUser.getUserId()==user.getUserId()||(roleKey!=null&&roleKey.equals("admin"))){
+        if(loginUser.getUserId()==user.getUserId()){
+            return AjaxResult.error(HttpStatus.ERROR,"无操作权限");
+        }else if(!userService.isSuperAdmin(loginUser.getUserId())&&userService.isAdmin(user.getUserId())){
             return AjaxResult.error(HttpStatus.ERROR,"无操作权限");
         }
         return toAjax(userService.deleteUser(user.getUserId()));
     }
+
+
 }
