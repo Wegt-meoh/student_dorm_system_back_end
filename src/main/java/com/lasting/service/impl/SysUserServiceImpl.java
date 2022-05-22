@@ -102,12 +102,16 @@ public class SysUserServiceImpl implements ISysUserService {
     @Transactional
     public int updateUser(SysUser user) {
         Long userId = user.getUserId();
-        Long dormId = user.getDorm().getDormId();
-        Long roleId = user.getRole().getRoleId();
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        insertUserRole(userId,roleId);
-        userDormMapper.deleteUserDormByUserId(userId);
-        insertUserDorm(userId,dormId);
+        if(user.getDorm()!=null){
+            Long dormId = user.getDorm().getDormId();
+            userDormMapper.deleteUserDormByUserId(userId);
+            insertUserDorm(userId,dormId);
+        }
+        if(user.getRole()!=null){
+            Long roleId = user.getRole().getRoleId();
+            userRoleMapper.deleteUserRoleByUserId(userId);
+            insertUserRole(userId,roleId);
+        }
         return userMapper.updateUser(user);
     }
 

@@ -20,17 +20,20 @@ public class SysDormServiceImpl implements ISysDormService {
 
     @Override
     public Long getDormId(String dormNumber, String buildingNumber) {
-        return dormMapper.getDormId(dormNumber, buildingNumber);
+        if(dormNumber!=null&&buildingNumber!=null) return dormMapper.getDormId(dormNumber, buildingNumber);
+        return null;
     }
 
     @Override
     public SysDorm getDormByDormId(Long dormId) {
+        if(dormId ==null) return null;
         return dormMapper.getDormByDormId(dormId);
     }
 
     @Override
     public int insertDorm(String dormNumber, String buildingNumber) {
-        return dormMapper.insertDorm(dormNumber,buildingNumber);
+        if(dormNumber!=null&&buildingNumber!=null) return dormMapper.insertDorm(dormNumber,buildingNumber);
+        return 0;
     }
 
 

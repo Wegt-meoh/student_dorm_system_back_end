@@ -17,6 +17,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public SysRole selectRoleByUserId(Long userId) {
+        if(userId==null) return null;
         return roleMapper.selectRoleByUserId(userId);
     }
 
@@ -27,11 +28,13 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public SysRole selectRoleByRoleId(Long roleId) {
+        if(roleId==null) return null;
         return roleMapper.selectRoleByRoleId(roleId);
     }
 
     @Override
     public String getRoleKeyByUserId(Long userId) {
+        if(userId==null) return null;
         SysRole sysRole = roleMapper.selectRoleByUserId(userId);
         if(sysRole==null) return null;
         return sysRole.getRoleKey();
@@ -39,6 +42,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     public Long getRoleIdByRoleKey(String roleKey) {
+        if(roleKey==null) return null;
         List<SysRole> sysRoleList = roleMapper.selectRoleAll();
         for(SysRole i : sysRoleList){
             if(i.getRoleKey().equals(roleKey)){

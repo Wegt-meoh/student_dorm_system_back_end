@@ -5,6 +5,7 @@ import com.lasting.entity.SysUser;
 import com.lasting.entity.model.LoginUser;
 import com.lasting.service.ISysUserService;
 import com.lasting.utils.common.core.text.StringUtils;
+import com.lasting.utils.sql.SqlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String studentNumber) throws UsernameNotFoundException
     {
+        SqlUtil.filterKeyword(studentNumber);
         SysUser user = userService.selectUserByStudentNumber(studentNumber);
         if (StringUtils.isNull(user))
         {
